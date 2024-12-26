@@ -20,7 +20,9 @@ app.get("/", async (req, res) => {
     res.render("index.ejs");
   });
   
-
+app.get("/foods/new", (req,res) => {
+  res.render("./foods/new.ejs")
+});
 //----------------------------------Port 3000 Listener-------------------------------------------//
 
 app.listen(3000, () => {
