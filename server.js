@@ -6,14 +6,16 @@ require("./config/database");
 const express = require('express');
 const morgan = require('morgan');
 const Food = require("./models/food");
+const methodOverride = require("method-override");
 
 //Create an Express app
 const app = express();
 
 //-------------------------------------Middlewares------------------------------------------------//
 
-app.use(morgan('dev'));// Use Morgan middleware with the 'dev' option for concise output
 app.use(express.urlencoded({ extended: false }));
+app.use(methodOverride("_method"));
+app.use(morgan('dev'));// Use Morgan middleware with the 'dev' option for concise output
 
 //----------------------------------------Routes--------------------------------------------------//
 
@@ -23,8 +25,8 @@ app.get("/", async (req, res) => {
 
 app.get("/foods", async (req,res) => {
   const allFoods = await Food.find();
-  res.render("foods/index.ejs", {foods: allFoods})
-})
+  res.render("foods/index.ejs", {foods: allFoods});
+});
 
 app.post("/foods", async (req, res) => {
   const allFoods = await Food.find();
@@ -41,12 +43,17 @@ app.post("/foods", async (req, res) => {
 app.get("/foods/new", (req, res) => {
   res.render("./foods/new.ejs",{
     require: false,
-  })
+  });
 });
 
 app.get("/foods/:foodId", async (req,res) => {
- const foundFood = await Food.findById(req.params.foodId)
- res.render("foods/show.ejs", {food: foundFood})
+ const foundFood = await Food.findById(req.params.foodId);
+ res.render("foods/show.ejs", {food: foundFood});
+});
+
+app.delete("/foods/:foodId", async (req,res) => {
+  await Food.findByIdAndDelete(req.params.foodId);
+  res.redirect("/foods");
 });
 
 //----------------------------------Port 3000 Listener-------------------------------------------//
