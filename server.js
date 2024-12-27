@@ -44,6 +44,10 @@ app.get("/foods/new", (req, res) => {
   })
 });
 
+app.get("/foods/:foodId", async (req,res) => {
+ const foundFood = await Food.findById(req.params.foodId)
+ res.render("foods/show.ejs", {food: foundFood})
+});
 
 //----------------------------------Port 3000 Listener-------------------------------------------//
 
