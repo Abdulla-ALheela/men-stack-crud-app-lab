@@ -1,6 +1,6 @@
- //----------------------------------Packages Importing------------------------------------------//
- 
- require("dotenv").config();  // require package and Loads the environment variables from .env file
+//----------------------------------Packages Importing------------------------------------------//
+
+require("dotenv").config();  // require package and Loads the environment variables from .env file
 require("./config/database");
 
 const express = require('express');
@@ -13,16 +13,38 @@ const app = express();
 //-------------------------------------Middlewares------------------------------------------------//
 
 app.use(morgan('dev'));// Use Morgan middleware with the 'dev' option for concise output
+app.use(express.urlencoded({ extended: false }));
 
 //----------------------------------------Routes--------------------------------------------------//
 
 app.get("/", async (req, res) => {
-    res.render("index.ejs");
-  });
-  
-app.get("/foods/new", (req,res) => {
-  res.render("./foods/new.ejs")
+  res.render("index.ejs");
 });
+
+app.get("/foods", async (req,res) => {
+  const allFoods = await Food.find();
+  res.render("foods/index.ejs", {foods: allFoods})
+})
+
+app.post("/foods", async (req, res) => {
+  const allFoods = await Food.find();
+  if(req.body.image === "" || req.body.name === "" || req.body.description === "" ){
+    res.render("./foods/new.ejs",{
+      require: true,
+    });
+  }else{
+  await Food.create(req.body);
+  res.redirect("./foods");
+};
+});
+
+app.get("/foods/new", (req, res) => {
+  res.render("./foods/new.ejs",{
+    require: false,
+  })
+});
+
+
 //----------------------------------Port 3000 Listener-------------------------------------------//
 
 app.listen(3000, () => {
