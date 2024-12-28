@@ -1,20 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><% food.name %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>
+        <% food.name %>
+    </title>
 </head>
+
 <body>
     <%- include('../partials/nav') %>
-    <h1><%= food.name %></h1>
-    <img src=<%=food.image %> alt="<%= food.name %> image">
-    <p><b>Description:</b> <%= food.description %></p>
+        <div class="main">
+            <ul class="cards">
+                <li class="cards_item">
+                    <div class="card">
+                        <div class="card_content">
+                            <h2 class="card_title"> <%= food.name %></h2>
+                            <div class="card_image"><img src=<%=food.image %> class = "images" alt="<%= food.name %> image"></div>
+                            <div class="card_text"><p class="description"><b>Description:</b><%= food.description %></p> </div>
 
-    <form action="/foods/<%=food._id%>?_method=DELETE" method="POST">
-        <button type="submit">Delete <%= food.name %></button>
-    </form>
+                            <form action="/foods/<%=food._id%>?_method=DELETE" method="POST">
+                                <button type="submit" class="button-55">Delete <%= food.name %></button>
+                            </form>
 
-    <a href="/foods/<%=food._id %>/edit">Edit <% food.name %></a>
+                            <a href="/foods/<%=food._id %>/edit" class="button-55">Edit <% food.name %></a>
+
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
 </body>
+
 </html>

@@ -7,7 +7,7 @@ const express = require('express');
 const morgan = require('morgan');
 const Food = require("./models/food");
 const methodOverride = require("method-override");
-
+const path = require("path");
 //Create an Express app
 const app = express();
 
@@ -16,6 +16,7 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride("_method"));
 app.use(morgan('dev'));// Use Morgan middleware with the 'dev' option for concise output
+app.use(express.static(path.join(__dirname, "public")));
 
 //----------------------------------------Routes--------------------------------------------------//
 
@@ -34,7 +35,6 @@ app.get("/foods", async (req, res) => {
 
 //Route to processes the form data for creating new food
 app.post("/foods", async (req, res) => {
-  const allFoods = await Food.find();
   if (req.body.image === "" || req.body.name === "" || req.body.description === "") {
     res.render("./foods/new.ejs", {
       require: true,

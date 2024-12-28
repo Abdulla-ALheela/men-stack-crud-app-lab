@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit <%= food.name %>
-    </title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>Edit <%= food.name %></title>
 </head>
 
 <body>
@@ -13,25 +13,25 @@
         <h1>Edit a food</h1>
         <form action="/foods/<%=food._id%>?_method=PUT" method="POST">
 
-            <div>
-                <label for="image">Image URL:</label>
+            <div class="form">
+                <label for="image">Image URL</label>
                 <textarea type="text" name="image" id="image"><%= food.image %></textarea>
             </div>
 
-            <div>
-                <label for="name">Name:</label>
+            <div class="form">
+                <label for="name">Name</label>
                 <input type="text" name="name" value="<%= food.name %>" id="name" />
             </div>
 
-            <div>
-                <label for="description">Description:</label>
+            <div class="form">
+                <label for="description">Description</label>
                 <textarea type="text" name="description" id="description"><%= food.description%></textarea>
             </div>
             <% if(require){ %>
                 <h3>All fileds required</h3>
                 <% } %>
 
-                    <button type="submit">Update food</button>
+                    <button type="submit" class="button-55">Update food</button>
         </form>
 </body>
 

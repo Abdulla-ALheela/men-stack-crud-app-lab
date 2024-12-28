@@ -4,19 +4,29 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
     <title>Foods Index</title>
 </head>
 
 <body>
     <%- include('../partials/nav') %>
         <h1>All Foods</h1>
-        <ul>
-            <% foods.forEach(food=> { %>
-                <li><a href="/foods/<%= food._id %>">
-                        <%= food.name %>
-                    </a></li>
-                    <% }); %>
-        </ul>
+        <% foods.forEach(food=> { %>
+        <div class="main">
+            <ul class="cards">
+              <li class="cards_item">
+                <div class="card">
+                  <div class="card_image"><img src="<%=food.image%>" alt="<%=food.name%> image"></div>
+                  <div class="card_content">
+                    <h2 class="card_title"> <a href="/foods/<%= food._id %>" class="button-55 list"><%= food.name %></a></h2>
+                  </div>
+                </div>
+              </li>
+            </ul>
+        </div>
+          
+            <% }); %>
+
 </body>
 
 </html>
