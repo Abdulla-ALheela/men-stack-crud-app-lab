@@ -8,11 +8,13 @@
 <body>
     <%- include('../partials/nav') %>
     <h1><%= food.name %></h1>
-    <img src=<%=food.image %> alt=<%= food.name %> image>
-    <p><%= food.description %></p>
+    <img src=<%=food.image %> alt="<%= food.name %> image">
+    <p><b>Description:</b> <%= food.description %></p>
 
     <form action="/foods/<%=food._id%>?_method=DELETE" method="POST">
         <button type="submit">Delete <%= food.name %></button>
     </form>
+
+    <a href="/foods/<%=food._id %>/edit">Edit <% food.name %></a>
 </body>
 </html>

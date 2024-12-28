@@ -4,33 +4,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create a food</title>
+    <title>Edit <%= food.name %>
+    </title>
 </head>
 
 <body>
     <%- include('../partials/nav') %>
-        <h1>Create a new food!</h1>
-        <form action="/foods" method="POST">
+        <h1>Edit a food</h1>
+        <form action="/foods/<%=food._id%>?_method=PUT" method="POST">
 
             <div>
                 <label for="image">Image URL:</label>
-                <textarea type="text" name="image" id="image"></textarea>
+                <textarea type="text" name="image" id="image"><%= food.image %></textarea>
             </div>
 
             <div>
                 <label for="name">Name:</label>
-                <input type="text" name="name" id="name" />
+                <input type="text" name="name" value="<%= food.name %>" id="name" />
             </div>
 
             <div>
                 <label for="description">Description:</label>
-                <textarea type="text" name="description" id="description"></textarea>
+                <textarea type="text" name="description" id="description"><%= food.description%></textarea>
             </div>
             <% if(require){ %>
                 <h3>All fileds required</h3>
                 <% } %>
 
-                    <button type="submit">Add food</button>
+                    <button type="submit">Update food</button>
         </form>
 </body>
 

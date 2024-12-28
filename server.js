@@ -19,42 +19,74 @@ app.use(morgan('dev'));// Use Morgan middleware with the 'dev' option for concis
 
 //----------------------------------------Routes--------------------------------------------------//
 
+//Route to display the main page
 app.get("/", async (req, res) => {
   res.render("index.ejs");
 });
 
-app.get("/foods", async (req,res) => {
+
+//Route to displays foods list
+app.get("/foods", async (req, res) => {
   const allFoods = await Food.find();
-  res.render("foods/index.ejs", {foods: allFoods});
+  res.render("foods/index.ejs", { foods: allFoods });
 });
 
+
+//Route to processes the form data for creating new food
 app.post("/foods", async (req, res) => {
   const allFoods = await Food.find();
-  if(req.body.image === "" || req.body.name === "" || req.body.description === "" ){
-    res.render("./foods/new.ejs",{
+  if (req.body.image === "" || req.body.name === "" || req.body.description === "") {
+    res.render("./foods/new.ejs", {
       require: true,
     });
-  }else{
-  await Food.create(req.body);
-  res.redirect("./foods");
-};
+  } else {
+    await Food.create(req.body);
+    res.redirect("./foods");
+  };
 });
 
+
+//Route to display a form for creating new form
 app.get("/foods/new", (req, res) => {
-  res.render("./foods/new.ejs",{
+  res.render("./foods/new.ejs", {
     require: false,
   });
 });
 
-app.get("/foods/:foodId", async (req,res) => {
- const foundFood = await Food.findById(req.params.foodId);
- res.render("foods/show.ejs", {food: foundFood});
+
+//Route to display the food information when visiting a specific food by it is id
+app.get("/foods/:foodId", async (req, res) => {
+  const foundFood = await Food.findById(req.params.foodId);
+  res.render("foods/show.ejs", { food: foundFood });
 });
 
-app.delete("/foods/:foodId", async (req,res) => {
+
+//Route to delet a food 
+app.delete("/foods/:foodId", async (req, res) => {
   await Food.findByIdAndDelete(req.params.foodId);
   res.redirect("/foods");
 });
+
+
+//Route to proccess the form information and update food 
+app.put("/foods/:foodId", async (req, res) => {
+  
+    await Food.findByIdAndUpdate(req.params.foodId, req.body);
+
+    res.redirect(`/foods/${req.params.foodId}`);
+});
+
+
+//Route to display a form to edit a food 
+app.get("/foods/:foodId/edit", async (req, res) => {
+  const foundFood = await Food.findById(req.params.foodId);
+
+  res.render("./foods/edit.ejs", {
+    food: foundFood,
+    require: false,
+  });
+});
+
 
 //----------------------------------Port 3000 Listener-------------------------------------------//
 
