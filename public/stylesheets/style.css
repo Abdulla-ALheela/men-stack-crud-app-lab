@@ -219,3 +219,7 @@ h2.card_title {
     flex-direction: row;
 }
 
+.require{
+  color: red;
+  text-decoration: underline;
+}
